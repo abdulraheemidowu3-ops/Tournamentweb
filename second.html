@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Fire Tournament - Match Hub</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+    <style>
+        /* ===================================
+   GLOBAL STYLES & RESET
+   =================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    background-attachment: fixed;
+    color: #ffffff;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* ===================================
+   CONTAINER
+   =================================== */
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* ===================================
+   HEADER BANNER
+   =================================== */
+.tournament-header {
+    position: relative;
+    background: linear-gradient(135deg, #ff6b6b, #ee5a24, #ff4757);
+    border-radius: 20px;
+    padding: 60px 40px;
+    margin-bottom: 40px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(255, 107, 107, 0.4);
+}
+
+.header-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="rgba(255,255,255,0.03)"/></svg>') repeat;
+    opacity: 0.1;
+    animation: float 20s infinite linear;
+}
+
+@keyframes float {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(-100px);
+    }
+}
+
+.header-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+
+.tournament-title {
+    font-size: 3.5rem;
+    font-weight: 900;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    text-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 0 0 20px rgba(255, 255, 255, 0.5), 0 0 30px rgba(255, 255, 255, 0.3);
+    }
+    to {
+        text-shadow: 0 0 30px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 255, 255, 0.5);
+    }
+}
+
+.tournament-subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    opacity: 0.9;
+}
+
+.tournament-info {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px 30px;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+}
+
+.info-label {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.info-value {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+/* ===================================
+   COUNTDOWN TIMER
+   =================================== */
+.countdown-section {
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    border-radius: 20px;
+    padding: 40px;
+    margin-bottom: 40px;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.section-title {
+    font-size: 2rem;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: relative;
+    display: inline-block;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #ff6b6b, transparent);
+}
+
+.countdown {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.countdown-item {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px 30px;
+    border-radius: 15px;
+    min-width: 100px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.countdown-item:hover {
+    transform: translateY(-5px);
+}
+
+.countdown-value {
+    display: block;
+    font-size: 3rem;
+    font-weight: bold;
+    color: #ff6b6b;
+}
+
+.countdown-label {
+    display: block;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.8;
+    margin-top: 5px;
+}
+
+/* ===================================
+   ANNOUNCEMENTS SECTION
+   =================================== */
+.announcements-section {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    border-radius: 20px;
+    padding: 40px;
+    margin-bottom: 40px;
+    box-shadow: 0 10px 40px rgba(231, 76, 60, 0.3);
+}
+
+.announcements-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.announcement-item {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    backdrop-filter: blur(10px);
+    border-left: 4px solid #fff;
+}
+
+.announcement-item.pulse {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.02);
+    }
+}
+
+.announcement-icon {
+    font-size: 1.8rem;
+}
+
+.announcement-item p {
+    margin: 0;
+    font-size: 1rem;
+}
+
+/* ===================================
+   RULES SECTION
+   =================================== */
+.rules-section {
+    background: linear-gradient(135deg, #34495e, #2c3e50);
+    border-radius: 20px;
+    padding: 40px;
+    margin-bottom: 40px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.rules-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.rule-item {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.rule-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(5px);
+}
+
+.rule-number {
+    background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.rule-item p {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* ===================================
+   TEAMS SECTION
+   =================================== */
+.teams-section {
+    background: linear-gradient(135deg, #2c3e50, #34495e);
+    border-radius: 20px;
+    padding: 40px;
+    margin-bottom: 40px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.teams-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.team-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+    border-radius: 15px;
+    padding: 25px;
+    border: 2px solid rgba(255, 107, 107, 0.3);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.team-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #ff6b6b, #ee5a24, #ff4757);
+}
+
+.team-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(255, 107, 107, 0.4);
+    border-color: #ff6b6b;
+}
+
+.team-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.team-name {
+    font-size: 1.3rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.team-badge {
+    background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: bold;
+}
+
+.team-players {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.player {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 12px 15px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background 0.3s ease;
+}
+
+.player:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.player-icon {
+    font-size: 1.2rem;
+}
+
+.player-name {
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+/* ===================================
+   FIXTURES SECTION
+   =================================== */
+.fixtures-section {
+    background: linear-gradient(135deg, #16a085, #1abc9c);
+    border-radius: 20px;
+    padding: 40px;
+    margin-bottom: 40px;
+    box-shadow: 0 10px 40px rgba(22, 160, 133, 0.3);
+}
+
+.fixtures-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.match-card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 25px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.match-card:hover {
+    transform: translateX(10px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.match-card.highlight {
+    border-color: #f39c12;
+    background: linear-gradient(135deg, rgba(243, 156, 18, 0.2), rgba(241, 196, 15, 0.1));
+    box-shadow: 0 0 30px rgba(243, 156, 18, 0.4);
+}
+
+.match-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.match-number {
+    font-size: 1.2rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.match-status {
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.match-status.upcoming {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+}
+
+.match-status.live {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+.match-status.completed {
+    background: linear-gradient(135deg, #27ae60, #229954);
+}
+
+.match-details {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.match-teams {
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.match-info {
+    display: flex;
+    gap: 20px;
+    font-size: 0.95rem;
+    opacity: 0.9;
+}
+
+/* ===================================
+   CONTACT/SOCIAL SECTION
+   =================================== */
+.contact-section {
+    background: linear-gradient(135deg, #8e44ad, #9b59b6);
+    border-radius: 20px;
+    padding: 40px;
+    margin-bottom: 40px;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(142, 68, 173, 0.3);
+}
+
+.contact-subtitle {
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+    opacity: 0.9;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.social-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px 30px;
+    border-radius: 15px;
+    text-decoration: none;
+    color: #ffffff;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    min-width: 120px;
+}
+
+.social-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.social-btn.whatsapp:hover {
+    background: #25D366;
+    border-color: #25D366;
+}
+
+.social-btn.instagram:hover {
+    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    border-color: transparent;
+}
+
+.social-btn.facebook:hover {
+    background: #1877F2;
+    border-color: #1877F2;
+}
+
+.social-btn.tiktok:hover {
+    background: #000000;
+    border-color: #00f2ea;
+}
+
+.social-btn.snapchat:hover {
+    background: #FFFC00;
+    border-color: #FFFC00;
+    color: #000000;
+}
+
+.social-icon {
+    font-size: 2rem;
+}
+
+.social-name {
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+/* ===================================
+   FOOTER
+   =================================== */
+.footer {
+    text-align: center;
+    padding: 30px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    margin-top: 20px;
+}
+
+.footer p {
+    margin: 5px 0;
+    opacity: 0.8;
+}
+
+.footer-tagline {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.short{
+    text-align: center;
+}
+
+/* ===================================
+   RESPONSIVE DESIGN
+   =================================== */
+@media (max-width: 768px) {
+    .tournament-title {
+        font-size: 2rem;
+    }
+
+    .tournament-subtitle {
+        font-size: 1.2rem;
+    }
+
+    .tournament-info {
+        gap: 15px;
+    }
+
+    .info-item {
+        padding: 10px 20px;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+    }
+
+    .countdown {
+        gap: 15px;
+    }
+
+    .countdown-item {
+        padding: 15px 20px;
+        min-width: 80px;
+    }
+
+    .countdown-value {
+        font-size: 2rem;
+    }
+
+    .teams-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .rules-container {
+        grid-template-columns: 1fr;
+    }
+
+    .social-links {
+        gap: 15px;
+    }
+
+    .social-btn {
+        min-width: 100px;
+        padding: 15px 20px;
+    }
+
+    .container {
+        padding: 15px;
+    }
+
+    .tournament-header,
+    .countdown-section,
+    .announcements-section,
+    .rules-section,
+    .teams-section,
+    .fixtures-section,
+    .contact-section {
+        padding: 25px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .tournament-title {
+        font-size: 1.5rem;
+        letter-spacing: 2px;
+    }
+
+    .tournament-info {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .info-item {
+        width: 100%;
+    }
+
+    .countdown-value {
+        font-size: 1.8rem;
+    }
+
+    .match-info {
+        flex-direction: column;
+        gap: 5px;
+    }
+}
+    </style>
+
+<body>
+    <!-- Main Container -->
+    <div class="container">
+        
+        <!-- Header Banner -->
+        <header class="tournament-header">
+            <div class="header-overlay"></div>
+            <div class="header-content">
+                <h1 class="tournament-title">FREE FIRE CHAMPIONSHIP</h1>
+                <p class="tournament-subtitle">Squad Battle Royale</p>
+                <div class="tournament-info">
+                    <div class="info-item">
+                        <span class="info-label">Mode</span>
+                        <span class="info-value">Squad (3v3)</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Teams</span>
+                        <span class="info-value">7 Squads</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Date</span>
+                        <span class="info-value">February 15, 2026</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Countdown Timer Section -->
+        <section class="countdown-section">
+            <h2 class="section-title">Tournament Starts In</h2>
+            <div class="countdown">
+                <div class="countdown-item">
+                    <span class="countdown-value" id="days">00</span>
+                    <span class="countdown-label">Days</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-value" id="hours">00</span>
+                    <span class="countdown-label">Hours</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-value" id="minutes">00</span>
+                    <span class="countdown-label">Minutes</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-value" id="seconds">00</span>
+                    <span class="countdown-label">Seconds</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Announcements Section -->
+        <section class="announcements-section">
+            <h2 class="section-title">📢 Important Announcements</h2>
+            <div class="announcements-container">
+                <div class="announcement-item pulse">
+                    <span class="announcement-icon">🔥</span>
+                    <p>Room ID and password will be shared on WhatsApp 30 minutes before the match</p>
+                </div>
+                <div class="announcement-item">
+                    <span class="announcement-icon">⚠️</span>
+                    <p>All players must join the room 10 minutes before match start</p>
+                </div>
+                <div class="announcement-item">
+                    <span class="announcement-icon">🏆</span>
+                    <p>Winners will be announced immediately after the final match</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tournament Rules Section -->
+        <section class="rules-section">
+            <h2 class="section-title">⚔️ Tournament Rules</h2>
+            <div class="rules-container">
+                <div class="rule-item">
+                    <span class="rule-number">1</span>
+                    <p>Each squad must have exactly 3 players. No substitutions allowed after registration.</p>
+                </div>
+                <div class="rule-item">
+                    <span class="rule-number">2</span>
+                    <p>Use of hacks, cheats, or any third-party software will result in immediate disqualification.</p>
+                </div>
+                <div class="rule-item">
+                    <span class="rule-number">3</span>
+                    <p>All players must join the custom room using the provided Room ID and password.</p>
+                </div>
+                <div class="rule-item">
+                    <span class="rule-number">4</span>
+                    <p>Teams must be ready 10 minutes before the scheduled match time.</p>
+                </div>
+                <div class="rule-item">
+                    <span class="rule-number">5</span>
+                    <p>Screen recording is mandatory. Failure to provide proof may result in disqualification.</p>
+                </div>
+                <div class="rule-item">
+                    <span class="rule-number">6</span>
+                    <p>Respectful conduct is required. Toxic behavior will not be tolerated.</p>
+                </div>
+                <div class="rule-item">
+                    <span class="rule-number">7</span>
+                    <p>Winner is determined by highest total points (kills + placement).</p>
+                </div>
+                <div class="rule-item">
+                    <span class="rule-number">8</span>
+                    <p>Admin decisions are final. Disputes should be reported immediately via WhatsApp.</p>
+                </div>
+            </div>
+        </section>
+        <h1 class="short">No Squad yet📪</h1>
+
+
+<!-- -------- -->
+
+
+        <!-- Match Fixtures Section -->
+        <section class="fixtures-section">
+            <h2 class="section-title">📅 Match Schedule</h2>
+            <div class="fixtures-container">
+                <!-- Match 1 -->
+                <div class="match-card">
+                    <div class="match-header">
+                        <span class="match-number">MATCH 1</span>
+                        <span class="match-status upcoming">UPCOMING</span>
+                    </div>
+                    <div class="match-details">
+                        <div class="match-teams">
+                            <span class="team">All Squads Battle Royale</span>
+                        </div>
+                        <div class="match-info">
+                            <span class="match-time">⏰ 3:00 PM</span>
+                            <span class="match-map">🗺️ Bermuda</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Social Media / Contact Section -->
+        <section class="contact-section">
+            <h2 class="section-title">📱 Stay Connected</h2>
+            <p class="contact-subtitle">Follow us on social media for updates and announcements</p>
+            <div class="social-links">
+                <a href="https://wa.me/1234567890" class="social-btn whatsapp" target="_blank">
+                    <span class="social-icon">📱</span>
+                    <span class="social-name">WhatsApp</span>
+                </a>
+                <a href="https://instagram.com" class="social-btn instagram" target="_blank">
+                    <span class="social-icon">📷</span>
+                    <span class="social-name">Instagram</span>
+                </a>
+                <a href="https://facebook.com" class="social-btn facebook" target="_blank">
+                    <span class="social-icon">👥</span>
+                    <span class="social-name">Facebook</span>
+                </a>
+                <a href="https://tiktok.com" class="social-btn tiktok" target="_blank">
+                    <span class="social-icon">🎵</span>
+                    <span class="social-name">TikTok</span>
+                </a>
+                <a href="https://snapchat.com" class="social-btn snapchat" target="_blank">
+                    <span class="social-icon">👻</span>
+                    <span class="social-name">Snapchat</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2026 Free Fire Championship. All Rights Reserved.</p>
+            <p class="footer-tagline">May the best squad win! 🏆</p>
+        </footer>
+
+    </div>
+
+    <!-- JavaScript File -->
+    <script>
+        // ===================================
+// TOURNAMENT COUNTDOWN TIMER
+// ===================================
+
+/**
+ * This function creates a live countdown timer to the tournament start
+ * Set your tournament date and time below
+ */
+
+// Set the tournament date and time (YYYY, MM-1, DD, HH, MM, SS)
+// Note: Month is 0-indexed (0 = January, 1 = February, etc.)
+const tournamentDate = new Date(2026, 1, 15, 15, 0, 0).getTime(); // Feb 15, 2026 at 3:00 PM
+
+// Update countdown every second
+const countdownInterval = setInterval(updateCountdown, 1000);
+
+/**
+ * Updates the countdown timer display
+ */
+function updateCountdown() {
+    // Get current date and time
+    const now = new Date().getTime();
+    
+    // Calculate time difference
+    const distance = tournamentDate - now;
+    
+    // Calculate days, hours, minutes, and seconds
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    
+    // Update HTML elements
+    document.getElementById('days').textContent = formatTime(days);
+    document.getElementById('hours').textContent = formatTime(hours);
+    document.getElementById('minutes').textContent = formatTime(minutes);
+    document.getElementById('seconds').textContent = formatTime(seconds);
+    
+    // If countdown is finished
+    if (distance < 0) {
+        clearInterval(countdownInterval);
+        document.getElementById('days').textContent = '00';
+        document.getElementById('hours').textContent = '00';
+        document.getElementById('minutes').textContent = '00';
+        document.getElementById('seconds').textContent = '00';
+        
+        // Optional: Show a message when tournament starts
+        showTournamentStartMessage();
+    }
+}
+
+/**
+ * Formats time to always show 2 digits (e.g., 05 instead of 5)
+ * @param {number} time - The time value to format
+ * @returns {string} - Formatted time string
+ */
+function formatTime(time) {
+    return time < 10 ? '0' + time : time;
+}
+
+/**
+ * Shows a message when the tournament starts
+ */
+function showTournamentStartMessage() {
+    const countdownSection = document.querySelector('.countdown-section');
+    if (countdownSection) {
+        const title = countdownSection.querySelector('.section-title');
+        if (title) {
+            title.textContent = '🔥 TOURNAMENT IS LIVE! 🔥';
+            title.style.color = '#ff6b6b';
+            title.style.animation = 'blink 1s infinite';
+        }
+    }
+}
+
+// ===================================
+// MATCH STATUS UPDATER (Optional)
+// ===================================
+
+/**
+ * This section can be used to automatically update match statuses
+ * You can customize this based on your needs
+ */
+
+/**
+ * Updates match status based on current time
+ * This is a demonstration - customize times as needed
+ */
+function updateMatchStatuses() {
+    const now = new Date();
+    const currentHour = now.getHours();
+    const currentMinutes = now.getMinutes();
+    
+    // Get all match cards
+    const matchCards = document.querySelectorAll('.match-card');
+    
+    matchCards.forEach((card, index) => {
+        const statusBadge = card.querySelector('.match-status');
+        
+        // Example logic - customize based on your match times
+        if (index === 0 && currentHour >= 15 && currentHour < 15.5) {
+            // Match 1 is live at 3:00 PM
+            updateStatus(statusBadge, 'LIVE', 'live');
+        } else if (index === 0 && currentHour >= 15.5) {
+            // Match 1 is completed after 3:30 PM
+            updateStatus(statusBadge, 'COMPLETED', 'completed');
+        }
+        
+        // Add more conditions for other matches as needed
+    });
+}
+
+/**
+ * Updates the status badge of a match
+ * @param {HTMLElement} element - The status badge element
+ * @param {string} text - The status text to display
+ * @param {string} className - The CSS class to apply
+ */
+function updateStatus(element, text, className) {
+    element.textContent = text;
+    element.className = 'match-status ' + className;
+}
+
+// Check match statuses every minute
+// Uncomment the line below if you want automatic status updates
+// setInterval(updateMatchStatuses, 60000);
+
+// ===================================
+// PAGE ANIMATIONS
+// ===================================
+
+/**
+ * Adds smooth scroll behavior and entrance animations
+ */
+document.addEventListener('DOMContentLoaded', function() {
+    // Add fade-in animation to sections as they come into view
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '0';
+                entry.target.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    entry.target.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }, 100);
+                
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+    
+    // Observe all major sections
+    const sections = document.querySelectorAll('.countdown-section, .announcements-section, .rules-section, .teams-section, .fixtures-section, .contact-section');
+    sections.forEach(section => observer.observe(section));
+    
+    // Initialize countdown
+    updateCountdown();
+});
+
+// ===================================
+// SOCIAL MEDIA CLICK TRACKING (Optional)
+// ===================================
+
+/**
+ * Tracks social media button clicks
+ * You can use this to track engagement or add custom actions
+ */
+document.querySelectorAll('.social-btn').forEach(button => {
+    button.addEventListener('click', function(e) {
+        const platform = this.querySelector('.social-name').textContent;
+        console.log(`User clicked: ${platform}`);
+        
+        // You can add analytics tracking here
+        // Example: gtag('event', 'social_click', { platform: platform });
+    });
+});
+
+// ===================================
+// TEAM CARD INTERACTIONS (Optional)
+// ===================================
+
+/**
+ * Adds interactive effects to team cards
+ */
+document.querySelectorAll('.team-card').forEach(card => {
+    card.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-10px) scale(1.02)';
+    });
+    
+    card.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0) scale(1)';
+    });
+});
+
+// ===================================
+// UTILITY FUNCTIONS
+// ===================================
+
+/**
+ * Smooth scroll to section
+ * @param {string} sectionId - The ID of the section to scroll to
+ */
+function scrollToSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    if (section) {
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+}
+
+/**
+ * Copy text to clipboard
+ * @param {string} text - The text to copy
+ */
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(() => {
+        console.log('Text copied to clipboard');
+        // You can show a success message here
+    }).catch(err => {
+        console.error('Failed to copy text:', err);
+    });
+}
+
+// ===================================
+// CONSOLE WELCOME MESSAGE
+// ===================================
+
+console.log('%c🎮 FREE FIRE CHAMPIONSHIP 🎮', 'color: #ff6b6b; font-size: 24px; font-weight: bold;');
+console.log('%cWelcome to the tournament hub!', 'color: #3498db; font-size: 16px;');
+console.log('%cGood luck to all participants! 🏆', 'color: #27ae60; font-size: 14px;');
+    </script>
+</body>
+</html>
